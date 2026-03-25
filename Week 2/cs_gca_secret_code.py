@@ -9,7 +9,7 @@ from typing import List
 import time
 # also adding time to compare run time of both of these versions
 
-def num_combinations(fragments: List[int], accessCode: int) -> int:
+def num_combinations(fragments: List[int], accessCode: int) -> int: # only two fragments for a combination
     n = len(fragments)
     numCombos = 0
     for i in range(n):
@@ -24,9 +24,9 @@ def num_combinations_v2(fragments: List[int], accessCode: int) -> int:
     n = len(str(accessCode))
     def backtrack(idx, codeSoFar, seen):
         nonlocal numCombos
-        if len(codeSoFar) > n:
+        if len(codeSoFar) > n: # current code shouldn't exceed accessCode
             return
-        if codeSoFar == str(accessCode):
+        if codeSoFar == str(accessCode): # found a valid code where each index is unique
             numCombos += 1
             return
         for i, fragment in enumerate(fragments):
@@ -35,7 +35,8 @@ def num_combinations_v2(fragments: List[int], accessCode: int) -> int:
                 backtrack(i, codeSoFar + str(fragment), seen)
                 seen.discard(i)
         return
-
+    
+    # want to note that starting codes at i here, and then doing the same above in backtrack() guarantees us unique paths
     for i, fragment in enumerate(fragments):
         starting = set()
         starting.add(i)
