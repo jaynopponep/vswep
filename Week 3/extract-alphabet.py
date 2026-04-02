@@ -22,6 +22,9 @@ char1 comes before char2. (e.g. RAT vs ART -> {"R": ["A", ..., ....]}
 within a map, for key, values -> values += 1 for its in-degree count.
 -> begin a queue (BFS) that accepts nodes where in-degree == 0, as in all prev nodes are processed.
 -> each time we hit a new node, in-degree value -= 1, if 0 then add to queue.
+
+W = number of words, L = max word length or max chars possible within a word
+overall O(W*L), where this worst case complexity comes from building our graph, or wordOrderMap below
 """
 
 from collections import defaultdict, deque
