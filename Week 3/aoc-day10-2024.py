@@ -8,8 +8,8 @@ direct 0 to 9 is not allowed. must be 0, 1, 2, 3, 4... 9
 """
 
 trails = []
-#file_name = 'aoc-day10-data.txt'
-file_name = 'aoc-day10-data-easy.txt'
+file_name = 'aoc-day10-data.txt'
+#file_name = 'aoc-day10-data-easy.txt'
 with open(file_name, 'r') as f:
     # to have our input pretty clean, we should have each num be 
     # individual elements. so a 2d matrix.
@@ -21,15 +21,17 @@ def findTrails(hikingTrail):
     totalTrails = 0
     dirs = [[0,1],[1,0],[-1,0],[0,-1]]
 
-    def dfs(row, col, curr):
+    def dfs(row, col, curr, seen):
         nonlocal totalTrails
-        if trails[row][col] == "9":
-            totalTrails += 1
+        if curr == "9":
+            if (row, col) not in seen:
+                seen.add((row, col))
+                totalTrails += 1
             return
         for dx, dy in dirs:
             r,c=dx+row,dy+col
             if r >= 0 and c >= 0 and r < m and c < n and trails[r][c] != '.' and (int(trails[r][c]) == int(curr) + 1):
-                dfs(r, c, trails[r][c])
+                dfs(r, c, trails[r][c], seen)
         return
         
 
@@ -37,7 +39,7 @@ def findTrails(hikingTrail):
         for j in range(n):
             if trails[i][j] == "0":
                 # i think DFS would make sense here, but BFS is ok too
-                dfs(i, j, "0")
+                dfs(i, j, "0", set())
     return totalTrails
 
 if __name__ == "__main__":
