@@ -33,13 +33,24 @@ def findTrails(hikingTrail):
             if r >= 0 and c >= 0 and r < m and c < n and trails[r][c] != '.' and (int(trails[r][c]) == int(curr) + 1):
                 dfs(r, c, trails[r][c], seen)
         return
-        
+    
+    def dfs_part2(row, col, curr):
+        nonlocal totalTrails
+        if curr == "9":
+            totalTrails += 1
+            return
+        for dx, dy in dirs:
+            r,c=dx+row,dy+col
+            if r >= 0 and c >= 0 and r < m and c < n and trails[r][c] != '.' and (int(trails[r][c]) == int(curr) + 1):
+                dfs_part2(r, c, trails[r][c])
+        return
 
     for i in range(m):
         for j in range(n):
             if trails[i][j] == "0":
                 # i think DFS would make sense here, but BFS is ok too
-                dfs(i, j, "0", set())
+                #dfs(i, j, "0", set())
+                dfs_part2(i,j,"0")
     return totalTrails
 
 if __name__ == "__main__":
